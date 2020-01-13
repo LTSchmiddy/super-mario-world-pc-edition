@@ -25,6 +25,8 @@
 #include "../conffile.h"
 #include "../statemanager.h"
 #include "InputCustom.h"
+#include "ModScripts\SMW_GameMemory.h"
+#include "ModScripts\PurchaseItems.h"
 
 #include <iostream>
 //#include <bitset>
@@ -36,9 +38,20 @@
 #include <assert.h>
 #include <ctype.h>
 
+#define NUMOFCFGS 6
+
+#define CFG_NEWCONTROLS 0
+#define CFG_REACCESSCASTLES 1
+#define CFG_SELECTOPENSSAVEMENU 2
+#define CFG_USESCORETOBUYITEMS 3
+#define CFG_TURNWHILEFLYING 4
+#define CFG_HEALTHMODE 5
+
 //Config Variables:
 
-extern bool UseNewControls;
+//extern bool UseNewControls;
+extern bool GameConfig[];
+
 
 //extern bool SaveStationsHeal;
 //extern bool XraySMRedesignMode;
@@ -47,7 +60,7 @@ extern bool UseNewControls;
 
 
 //Methods:
-bool ShouldRunRegen();
+
 
 void HideMenu(void);
 void SMOnLoadState(void);

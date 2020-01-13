@@ -1,7 +1,7 @@
 import os, subprocess, time, sys
 
 # BaseRomName = "Super Metroid.sfc"
-EmuPath = "Super Metroid - PC Edition-debug.exe"
+EmuPath = "Super Mario World PC Edition - v0.1.exe"
 
 def LaunchEmulator(RomFile = None):
     # global GameExec, AHKExec
@@ -35,31 +35,31 @@ while True:
     RomList = os.listdir("Roms")
     
     if len(RomList) <= 0:
-        print "No Roms Found"
+        print("No Roms Found")
 
         
         
-    print "Available Roms to Load:"
+    print("Available Roms to Load:")
 
-    print "\t0: Load Emulator with no Rom (for configuration)"
+    print("\t0: Load Emulator with no Rom (for configuration)")
     # print "\t1: Super Metroid (Vanilla Rom)"
 
     printIndex = 1
     for i in RomList:
         # if i == BaseRomName:
             # continue
-        print "\t" + str(printIndex) + ": " + i.split(".")[0]
+        print("\t" + str(printIndex) + ": " + i.split(".")[0])
         printIndex += 1
 
         
     try:
-        selectedRom = int(raw_input("Type the number of the desired rom (or leave blank to quit), and press Enter: "))
+        selectedRom = int(input("Type the number of the desired rom (or leave blank to quit), and press Enter: "))
     except:
-        print "Quitting..."
+        print("Quitting...")
         time.sleep(1)
         sys.exit()
 
-    print selectedRom
+    print(selectedRom)
 
 
 
@@ -67,7 +67,7 @@ while True:
         LaunchEmulator()
 
     elif (selectedRom - 1) >= len(RomList):
-        print "Rom does not exist. Launching without Rom."
+        print("Rom does not exist. Launching without Rom.")
         LaunchEmulator()
         
     else:

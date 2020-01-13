@@ -1,0 +1,14 @@
+SelectOpensSaveMenu
+true
+
+ReAccessCastles
+true
+
+UseScoreToBuyItems
+true
+
+TurnWhileFlying
+true
+
+HealthMode
+false

@@ -287,7 +287,9 @@ void S9xOutputCheatSearchResults (SCheatData *);
 // Not worth putting in their own file because all they do is wrap Get/SetGetByteFree
 uint8 AlexGetByteFree(uint32 Address);
 uint16 AlexGet2BytesFree(uint32 Address);
-void AlexSetByteFree(uint8 Byte, uint32 Address);
+unsigned AlexGetMultiByteFree(uint32 Address, unsigned numOfBytes);
+void AlexSetByteFree(uint8 Value, uint32 Address);
+void AlexSetMultiByteFree(unsigned Value, uint32 Address, unsigned numOfBytes);
 
 
 const char * S9xGameGenieToRaw (const char *, uint32 &, uint8 &);

@@ -76,7 +76,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\Build Output\Debug</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <TargetName>LOZ A Link to the Past - PC Edition-debug</TargetName>
+    <TargetName>Super Mario World PC Edition - v0.1-debug</TargetName>
     <IncludePath>$(DXSDK_DIR)include;$(CG_INC_PATH);$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget);$(CG_LIB_PATH);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -92,7 +92,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\Build Output\Release</OutDir>
     <IntDir>$(SolutionDir)_Intermediate\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <TargetName>LOZ A Link to the Past - PC Edition v0.1</TargetName>
+    <TargetName>Super Mario World PC Edition - v0.1</TargetName>
     <IncludePath>$(DXSDK_DIR)include;$(CG_INC_PATH);$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget);$(CG_LIB_PATH);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -439,9 +439,12 @@
     <ClInclude Include="InputCustom.h" />
     <ClInclude Include="IS9xDisplayOutput.h" />
     <ClInclude Include="IS9xSoundOutput.h" />
+    <ClInclude Include="ModScripts\InputLabels.h" />
     <ClInclude Include="ModScripts\NewControls.h" />
     <ClInclude Include="ModScripts\NewGamePlus.h" />
+    <ClInclude Include="ModScripts\PurchaseItems.h" />
     <ClInclude Include="ModScripts\SMMods.h" />
+    <ClInclude Include="ModScripts\SMW_GameMemory.h" />
     <ClInclude Include="ModScripts\Utilities.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="rsrc\resource.h" />
@@ -580,9 +583,12 @@
     <ClCompile Include="gl_core_3_1.c" />
     <ClCompile Include="image_functions.cpp" />
     <ClCompile Include="InputCustom.cpp" />
+    <ClCompile Include="ModScripts\InputLabels.cpp" />
     <ClCompile Include="ModScripts\NewControls.cpp" />
     <ClCompile Include="ModScripts\NewGamePlus.cpp" />
+    <ClCompile Include="ModScripts\PurchaseItems.cpp" />
     <ClCompile Include="ModScripts\SMMods.cpp" />
+    <ClCompile Include="ModScripts\SMW_GameMemory.cpp" />
     <ClCompile Include="ModScripts\Utilities.cpp" />
     <ClCompile Include="render.cpp" />
     <ClCompile Include="snes_ntsc.c" />

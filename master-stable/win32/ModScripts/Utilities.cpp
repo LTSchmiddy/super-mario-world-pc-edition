@@ -16,6 +16,7 @@
 #include "../conffile.h"
 #include "../statemanager.h"
 #include "InputCustom.h"
+#include "ModScripts\SMW_GameMemory.h"
 
 #include <iostream>
 //#include <bitset>
@@ -44,62 +45,42 @@ using namespace std;
 #include <stdlib.h>
 #include <stdio.h>
 
-// Memory Locations:
 
-//const uint32 SamusHealthSBA = 0x7e09C2;
-
-const uint32 PlayerHealthAddress = 0x7EF36D;
-const uint32 PlayerMaxHealthAddress = 0x7EF36C;
-
-const uint32 PlayerMagicAddress = 0x7EF36E;
-
-
-
-const uint32 HasBowAddress = 0x7EF340;
-const uint32 HasBoomerangAddress = 0x7EF341;
-const uint32 HasHookshotAddress = 0x7EF342;
-const uint32 HasBombsAddress = 0x7EF343;
-const uint32 HasHammerAddress = 0x7EF34B;
-const uint32 HasLampAddress = 0x7EF34A;
-
-
-// Player Health
-int GetPlayerHealth() {
-	return AlexGetByteFree(PlayerHealthAddress);
+// Game States Managements:
+bool InOverworldMenu() {
+	return (AlexGetByteFree(A_GameState) == SMW_GameStates::V_Overworld);
 }
 
-int GetMaxPlayerHealth() {
-	return AlexGetByteFree(PlayerMaxHealthAddress);
+bool InLevel() {
+	return (AlexGetByteFree(A_GameState) == SMW_GameStates::V_Level);
 }
 
-void SetPlayerHealth(unsigned val) {
+// Player Score:
+unsigned GetPlayerScore() {
+	return AlexGetMultiByteFree(A_MarioScore, 3);
+}
 
-	if (val > GetMaxPlayerHealth()) {
-		val = GetMaxPlayerHealth();
+void SetPlayerScore(unsigned val) {
+	return AlexSetMultiByteFree(val, A_MarioScore, 3);
+}
+
+// Reserve Item:
+SMW_ReserveItem GetCurrentReserveItem() {
+	if (AlexGetByteFree(SMW_MemAddr::A_ReserveItem) > 0x04) {
+		return V_NoItem;
 	}
-	AlexSetByteFree(val, PlayerHealthAddress);;
+
+	return (SMW_ReserveItem)AlexGetByteFree(SMW_MemAddr::A_ReserveItem);
 }
 
-
-int GetPlayerMagic() {
-	return AlexGetByteFree(PlayerMagicAddress);
+void SetCurrentReserveItem(SMW_ReserveItem item) {
+	AlexSetByteFree(item, SMW_MemAddr::A_ReserveItem);
 }
 
-int GetMaxPlayerMagic() {
-	return 0x80;
+SMW_PlayerFacing GetPlayerFacing() {
+	return (SMW_PlayerFacing)AlexGetByteFree(SMW_MemAddr::A_PlayerFacing);
 }
 
-void SetPlayerMagic(unsigned val) {
-
-	if (val > GetMaxPlayerMagic()) {
-		val = GetMaxPlayerMagic();
-	}
-	AlexSetByteFree(val, PlayerMagicAddress);;
-}
-
-bool HasItem(uint32 ItemAddress) {
-	if (AlexGetByteFree(ItemAddress) != 0) {
-		return true;
-	}
-	return false;
+void SetPlayerFacing(SMW_PlayerFacing direction) {
+	AlexSetByteFree(direction, SMW_MemAddr::A_PlayerFacing);
 }

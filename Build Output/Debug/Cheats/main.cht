@@ -1,5 +1,5 @@
 cheat
-  name: Strafe
-  code: 7e0050=01
+  name: Max Points
+  code: 7e0f34=ff + 7e0f35=ff + 7e0f36=00
   enable
 

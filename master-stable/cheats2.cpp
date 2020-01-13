@@ -945,7 +945,7 @@ int S9xImportCheatsFromDatabase (const char *filename)
     return -2; /* No codes */
 }
 
-// Two Functions I added to the end of cheats2.spp to Make SNES Memory Access easier outside of cheats.cpp and cheats2.cpp
+// I added to the end of cheats2.spp to Make SNES Memory Access easier outside of cheats.cpp and cheats2.cpp
 // Not worth putting in their own file because all they do is wrap Get/SetGetByteFree
 
 uint8 AlexGetByteFree(uint32 Address) {
@@ -956,7 +956,30 @@ uint16 AlexGet2BytesFree(uint32 Address) {
 	return (AlexGetByteFree(Address + 1) << 8) + AlexGetByteFree(Address);
 }
 
-void AlexSetByteFree(uint8 Byte, uint32 Address) {
-	S9xSetByteFree(Byte, Address);
+unsigned AlexGetMultiByteFree(uint32 Address, unsigned numOfBytes) {
+	unsigned retVal = 0;
+	for (unsigned i = 0; i < numOfBytes; i++) {
+		retVal = retVal << 8;
+		retVal += AlexGetByteFree(Address + (numOfBytes - 1 - i));
+	}
+	return retVal;
+}
+
+void AlexSetByteFree(uint8 Value, uint32 Address) {
+	S9xSetByteFree(Value, Address);
+}
+
+void AlexSetMultiByteFree(unsigned Value, uint32 Address, unsigned numOfBytes) {
+	unsigned bitMask = 0b00000000000000000000000011111111;
+
+	unsigned procVal = Value;
+
+	for (unsigned i = 0; i < numOfBytes; i++) {
+		uint8 loadByte = procVal & bitMask;
+		AlexSetByteFree(loadByte, Address + i);
+		//AlexSetByteFree(loadByte, Address + (numOfBytes - 1 - i));
+		procVal = (procVal - loadByte) >> 8;
+	}
+
 }
 

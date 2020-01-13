@@ -24,27 +24,13 @@
 #include <assert.h>
 #include <ctype.h>
 
+#include "ModScripts\SMW_GameMemory.h"
 
+bool InOverworldMenu();
+bool InLevel();
 
-extern const uint32 HasBowAddress;
-extern const uint32 HasBoomerangAddress;
-extern const uint32 HasHookshotAddress;
-extern const uint32 HasBombsAddress;
-extern const uint32 HasHammerAddress;
-extern const uint32 HasLampAddress;
+unsigned GetPlayerScore();
+void SetPlayerScore(unsigned val);
 
-
-int GetPlayerHealth(void);
-
-int GetMaxPlayerHealth(void);
-
-void SetPlayerHealth(unsigned);
-
-
-int GetPlayerMagic(void);
-
-int GetMaxPlayerMagic(void);
-
-void SetPlayerMagic(unsigned);
-
-bool HasItem(uint32);
+SMW_ReserveItem GetCurrentReserveItem();
+void SetCurrentReserveItem(SMW_ReserveItem item);

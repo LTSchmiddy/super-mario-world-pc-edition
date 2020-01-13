@@ -1,17 +1,3 @@
 UseNewControls
 true
 
-NoChargeForDash
-true
-
-AutoPush
-false
-
-DropsNeverVanish
-true
-
-BalancedHealthRegen
-true
-
-BalancedMagicRegen
-true

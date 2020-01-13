@@ -18,6 +18,8 @@
 #include "../conffile.h"
 #include "../statemanager.h"
 #include "InputCustom.h"
+#include "ModScripts\SMW_GameMemory.h"
+#include "ModScripts\PurchaseItems.h"
 
 #include <iostream>
 //#include <bitset>
@@ -55,41 +57,31 @@ const uint32 Menu_Left = 0x8110080a;
 const uint32 Menu_Right = 0x8110080b;
 const uint32 Menu_A = 0x81100801;
 const uint32 Menu_B = 0x81100802;
+const uint32 Menu_Y = 0x81100803;
 
+const uint32 Control_Select = 0x81100106;
 const uint32 Control_Up = 0x81100108;
 const uint32 Control_Down = 0x81100109;
 const uint32 Control_Left = 0x8110010a;
 const uint32 Control_Right = 0x8110010b;
+const uint32 Control_X = 0x81100100;
 const uint32 Control_A = 0x81100101;
 const uint32 Control_B = 0x81100102;
+const uint32 Control_Y = 0x81100103;
+const uint32 Control_L = 0x81100104;
+const uint32 Control_R = 0x81100105;
 
+
+const uint32 BuyMushroom = 0x81100400; // X
+const uint32 BuyFlower = 0x81100401; // A
+const uint32 BuyStar = 0x81100402; // B
+const uint32 BuyFeather = 0x81100403; // Y
 
 // Quick Buttons:
-const uint32 StrafeButton = 0x81100201;
-const uint32 QuickBow = 0x81100200;
-const uint32 QuickBoomerang = 0x81100203;
-const uint32 QuickHookshot = 0x81100202;
-const uint32 QuickBomb = 0x81100204;
-const uint32 QuickHammer = 0x81100205;
-const uint32 QuickLamp = 0x81100207;
+
 
 
 // Addresses:
-const uint32 StrafeAddress = 0x7e0050;
-const uint32 FacingAddress1 = 0x7e002F;
-const uint32 FacingAddress2 = 0x7e0323;
-
-const uint32 ItemAddress = 0x7E0303;
-
-const uint8 BowIndex = 0x03;
-const uint8 BoomerangIndex = 0x02;
-const uint8 HookshotIndex = 0x0E;
-const uint8 BombIndex = 0x01;
-const uint8 LampIndex = 0x09;
-const uint8 HammerIndex = 0x04;
-
-uint8 oldFacing = 0x00;
-
 
 
 // Active Variables:====================================================
@@ -101,21 +93,28 @@ bool MenuPressed_Right = false;
 bool MenuPressed_A = false;
 bool MenuPressed_B = false;
 
-bool DoStrafe = false;
-bool ForceItemButton = false;
+bool reaccessCastlesPressed = false;
+
+unsigned itemPurchaseState = 0;
 
 
-unsigned lastPress = 0;
-unsigned OldItem = 0xff;
+bool lastBuyMushroomDown = false;
+bool lastBuyFlowerDown = false;
+bool lastBuyStarDown = false;
+bool lastBuyFeatherDown = false;
+
+bool flightTurnDown = false;
 
 
+bool GetUseMenuControls() {
+	return (AlexGetByteFree(A_GameState) != SMW_GameStates::V_Level);
+}
 
-//Methods:
+
 
 bool SetMenuControls(bool pressedIn) {
 
-	if (AlexGetByteFree(0x7E0010) >= 0x0C || AlexGetByteFree(0x7E0010) <= 0x05) {
-		//if (AlexGetByteFree(0x7E0010) == 0x0E) {
+	if (GetUseMenuControls()) {
 		return pressedIn;
 	}
 
@@ -125,7 +124,7 @@ bool SetMenuControls(bool pressedIn) {
 
 bool NewControlsInputUpdate(uint32 id, bool pressed) {
 
-	
+	// Checking to see if the menu controls are being pressed:
 	if (id == Menu_Up) {
 		//printf("\nPressing Up\n");
 		MenuPressed_Up = SetMenuControls(pressed);
@@ -152,9 +151,9 @@ bool NewControlsInputUpdate(uint32 id, bool pressed) {
 	}
 
 
-
+	
+	// Spoofing the Menu Controls if necessary:
 	if (id == Control_Up && MenuPressed_Up) {
-		//printf("Spoofing Up");
 		pressed = true;
 	}
 
@@ -177,65 +176,123 @@ bool NewControlsInputUpdate(uint32 id, bool pressed) {
 	if (id == Control_B && MenuPressed_B) {
 		pressed = true;
 	}
+	
 
+	// There's a secret method to re-enter castles after they've been beaten.
+	// Simply select the castle on the map and press L + R instead of A.
+	// If the A button pressed L + R on the map screen, we can spoof the castles being  re-selectable.
+	if (GameConfig[CFG_REACCESSCASTLES] && InOverworldMenu()) {
+		if (id == Control_A) {
+			reaccessCastlesPressed = pressed;
+		}
 
-
-	if (id == 0x81100103 && ForceItemButton) {
-		pressed = true;
+		if (reaccessCastlesPressed) {
+			if (id == Control_L || id == Control_R) {
+				pressed = true;
+			}
+		}
 	}
+
+	//if (GameConfig[CFG_USESCORETOBUYITEMS]) {
+	//	if (itemPurchaseState >= 40 && itemPurchaseState <= 75) {
+	//		if (id == Control_Select) {
+	//			pressed = true;
+	//			printf("Should Have Dropped Purchased Item...");
+
+	//		}
+	//	} else if (itemPurchaseState > 100000) {
+	//		ResetItemPurchase();
+	//		itemPurchaseState = 0;
+	//	}
+
+	//	if (itemPurchaseState > 0) {
+	//		itemPurchaseState++;
+	//	}
+	//}
+
+
 
 	return pressed;
-
-
-}
-void QuickItemUpdate(unsigned id, bool pressed, unsigned ItemID, unsigned HasItemAddress, unsigned ItemIndex) {
-	if (id == ItemID) {
-		if (HasItem(HasItemAddress) && pressed && lastPress == 0) {
-			lastPress = ItemID;
-			OldItem = AlexGetByteFree(ItemAddress);
-			AlexSetByteFree(ItemIndex, ItemAddress);
-			//printf("FireBow\n");
-			ForceItemButton = true;
-		}
-		else if (!pressed && lastPress == ItemID) {
-			lastPress = 0;
-			AlexSetByteFree(OldItem, ItemAddress);
-			ForceItemButton = false;
-		}
-	}
 }
 
 
 void NewControlsGameplayInputUpdate(uint32 id, bool pressed) {
-	if (id == StrafeButton && pressed) {
-		if (!DoStrafe) {
-			oldFacing = AlexGetByteFree(FacingAddress1);
+	
+	// Handling Opening the Save Menu when Select is pressed on the map screen:
+	if (GameConfig[CFG_SELECTOPENSSAVEMENU]) {
+		if (InOverworldMenu()) {
+
+			if ((id == Control_Select || id == Menu_Y) && pressed && AlexGetByteFree(A_SaveMenu) < SMW_SaveMenuTrigger::V_InitSaveMenu && AlexGetByteFree(A_OverworldMapState) == SMW_OverworldMapStates::V_OnLevelTile) {
+				AlexSetByteFree(0x05, A_SaveMenu);
+				printf("Trying to load save menu...");
+
+			}
 		}
-		DoStrafe = true;
-		AlexSetByteFree(oldFacing, FacingAddress1);
-		AlexSetByteFree(oldFacing, FacingAddress2);
-		AlexSetByteFree(0x01, StrafeAddress);
-
-
-
-	}
-	else if (id == StrafeButton && !pressed) {
-		if (DoStrafe) {
-			DoStrafe = false;
-			AlexSetByteFree(0x00, StrafeAddress);
-		}
-		oldFacing = AlexGetByteFree(FacingAddress1);
-
 	}
 
-	QuickItemUpdate(id, pressed, QuickBow, HasBowAddress, BowIndex);
-	QuickItemUpdate(id, pressed, QuickBoomerang, HasBoomerangAddress, BoomerangIndex);
-	QuickItemUpdate(id, pressed, QuickHookshot, HasHookshotAddress, HookshotIndex);
-	QuickItemUpdate(id, pressed, QuickBomb, HasBombsAddress, BombIndex);
-	QuickItemUpdate(id, pressed, QuickHammer, HasHammerAddress, HammerIndex);
-	QuickItemUpdate(id, pressed, QuickLamp, HasLampAddress, LampIndex);
-	//QuickItemUpdate(id, pressed, QuickBow, HasBowAddress, BowIndex);
 
+	//Handling Score Buys Items
+	if (GameConfig[CFG_USESCORETOBUYITEMS] && InLevel()) {
+		if (id == BuyMushroom) {
+			if (pressed) {
+
+			}
+
+			if (pressed && !lastBuyMushroomDown) {
+				printf("Buying Mushroom\n");
+				AttemptPurchaseItem(SMW_ReserveItem::V_Mushroom);
+				
+			}
+			lastBuyMushroomDown = pressed;
+		}
+
+		if (id == BuyFlower) {
+
+			if (pressed && !lastBuyFlowerDown) {
+				printf("Buying Flower\n");
+				AttemptPurchaseItem(SMW_ReserveItem::V_FireFlower);
+				
+			}
+			lastBuyFlowerDown = pressed;
+		}
+
+		if (id == BuyStar) {
+			if (pressed && !lastBuyStarDown) {
+				printf("Buying Star\n");
+				AttemptPurchaseItem(SMW_ReserveItem::V_InvincibilityStar);
+
+			}
+			lastBuyStarDown = pressed;
+		}
+
+		if (id == BuyFeather) {
+			if (pressed && !lastBuyFeatherDown) {
+				printf("Buying Feather\n");
+				AttemptPurchaseItem(SMW_ReserveItem::V_CapeFeather);
+				
+			}
+			lastBuyFeatherDown = pressed;
+		}
+	}
+
+	if (GameConfig[CFG_TURNWHILEFLYING]) {
+		if (id == Control_B) {
+			if (AlexGetByteFree(SMW_MemAddr::A_FlightMode) != 0x00 && pressed && !flightTurnDown) {
+
+				if (AlexGetByteFree(SMW_MemAddr::A_PlayerFacing) != 0x00) {
+					AlexSetByteFree(0x00, SMW_MemAddr::A_PlayerFacing);
+
+				}
+				else {
+					AlexSetByteFree(0x01, SMW_MemAddr::A_PlayerFacing);
+				}
+			}
+
+			flightTurnDown = pressed;
+		}
+	}
+
+	
 }
 
 void Input_OnUpdate() {

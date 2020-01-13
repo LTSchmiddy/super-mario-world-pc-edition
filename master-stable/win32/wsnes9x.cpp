@@ -215,6 +215,7 @@
 
 #include "wsnes9x.h"
 #include "ModScripts/SMMods.h"
+#include "ModScripts/InputLabels.h"
 #include "win32_sound.h"
 #include "win32_display.h"
 #include "CCGShader.h"
@@ -8205,83 +8206,85 @@ void SetInputUIText(HWND hDlg, int input) {
 	SetDlgItemText(hDlg, IDC_CANCEL, BUTTON_CANCEL);
 	SetDlgItemText(hDlg, IDC_LABEL_BLUE, INPUTCONFIG_LABEL_BLUE);
 
-	if (input == 2) {
-		SetDlgItemText(hDlg, IDC_LABEL_UP, INPUTCONFIG_LABEL_UNUSED);
-		//EnableWindow(GetDlgItem(hDlg, IDC_LABEL_UP), FALSE);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWN, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_LEFT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_RIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_A, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_B, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_X, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_Y, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_L, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_R, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_START, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_SELECT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_UNUSED);
+	InputLabels_SetInputLabels(hDlg, input);
 
-	}
-	else if (input == 1) {
-		SetDlgItemText(hDlg, IDC_LABEL_UP, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWN, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_LEFT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_RIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_A, TEXT("Strafe"));
-		SetDlgItemText(hDlg, IDC_LABEL_B, TEXT("Quick Hookshot"));
-		SetDlgItemText(hDlg, IDC_LABEL_X, TEXT("Quick Bow"));
-		SetDlgItemText(hDlg, IDC_LABEL_Y, TEXT("Quick Boomerang"));
-		SetDlgItemText(hDlg, IDC_LABEL_L, TEXT("Quick Bomb"));
-		SetDlgItemText(hDlg, IDC_LABEL_R, TEXT("Quick Hammer"));
-		SetDlgItemText(hDlg, IDC_LABEL_START, TEXT("Quick Lantern"));
-		SetDlgItemText(hDlg, IDC_LABEL_SELECT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_UNUSED);
-	}
+	//if (input == 2) {
+	//	SetDlgItemText(hDlg, IDC_LABEL_UP, INPUTCONFIG_LABEL_UNUSED);
+	//	//EnableWindow(GetDlgItem(hDlg, IDC_LABEL_UP), FALSE);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWN, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_LEFT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_RIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_A, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_B, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_X, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_Y, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_L, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_R, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_START, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_SELECT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_UNUSED);
 
-	else if (input == 0) {
-		SetDlgItemText(hDlg, IDC_LABEL_UP, TEXT("Move Up"));
-		SetDlgItemText(hDlg, IDC_LABEL_DOWN, TEXT("Move Down"));
-		SetDlgItemText(hDlg, IDC_LABEL_LEFT, TEXT("Move Left"));
-		SetDlgItemText(hDlg, IDC_LABEL_RIGHT, TEXT("Move Right"));
-		SetDlgItemText(hDlg, IDC_LABEL_A, TEXT("Interact / Dash"));
-		SetDlgItemText(hDlg, IDC_LABEL_B, TEXT("Sword"));
-		SetDlgItemText(hDlg, IDC_LABEL_X, TEXT("Map"));
-		SetDlgItemText(hDlg, IDC_LABEL_Y, TEXT("Use Selected Item"));
-		SetDlgItemText(hDlg, IDC_LABEL_L, TEXT("Previous Item"));
-		SetDlgItemText(hDlg, IDC_LABEL_R, TEXT("Next Item"));
-		SetDlgItemText(hDlg, IDC_LABEL_START, TEXT("Show Inventory"));
-		SetDlgItemText(hDlg, IDC_LABEL_SELECT, TEXT("Show Save Menu"));
-		//SetDlgItemText(hDlg, IDC_LABEL_SELECT, TEXT("Show In-Game Menu"));
-		SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_UNUSED);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_UNUSED);
-	}
-	else {
-		SetDlgItemText(hDlg, IDC_LABEL_UP, INPUTCONFIG_LABEL_UP);
-		//EnableWindow(GetDlgItem(hDlg, IDC_LABEL_UP), TRUE);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWN, INPUTCONFIG_LABEL_DOWN);
-		SetDlgItemText(hDlg, IDC_LABEL_LEFT, INPUTCONFIG_LABEL_LEFT);
-		SetDlgItemText(hDlg, IDC_LABEL_RIGHT, INPUTCONFIG_LABEL_RIGHT);
-		SetDlgItemText(hDlg, IDC_LABEL_A, INPUTCONFIG_LABEL_A);
-		SetDlgItemText(hDlg, IDC_LABEL_B, INPUTCONFIG_LABEL_B);
-		SetDlgItemText(hDlg, IDC_LABEL_X, INPUTCONFIG_LABEL_X);
-		SetDlgItemText(hDlg, IDC_LABEL_Y, INPUTCONFIG_LABEL_Y);
-		SetDlgItemText(hDlg, IDC_LABEL_L, INPUTCONFIG_LABEL_L);
-		SetDlgItemText(hDlg, IDC_LABEL_R, INPUTCONFIG_LABEL_R);
-		SetDlgItemText(hDlg, IDC_LABEL_START, INPUTCONFIG_LABEL_START);
-		SetDlgItemText(hDlg, IDC_LABEL_SELECT, INPUTCONFIG_LABEL_SELECT);
-		SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UPRIGHT);
-		SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UPLEFT);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_DOWNRIGHT);
-		SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_DOWNLEFT);
-	}
+	//}
+	//else if (input == 1) {
+	//	SetDlgItemText(hDlg, IDC_LABEL_UP, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWN, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_LEFT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_RIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_A, TEXT("Strafe"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_B, TEXT("Quick Hookshot"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_X, TEXT("Quick Bow"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_Y, TEXT("Quick Boomerang"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_L, TEXT("Quick Bomb"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_R, TEXT("Quick Hammer"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_START, TEXT("Quick Lantern"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_SELECT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_UNUSED);
+	//}
+
+	//else if (input == 0) {
+	//	SetDlgItemText(hDlg, IDC_LABEL_UP, TEXT("Move Up"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWN, TEXT("Move Down"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_LEFT, TEXT("Move Left"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_RIGHT, TEXT("Move Right"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_A, TEXT("Interact / Dash"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_B, TEXT("Sword"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_X, TEXT("Map"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_Y, TEXT("Use Selected Item"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_L, TEXT("Previous Item"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_R, TEXT("Next Item"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_START, TEXT("Show Inventory"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_SELECT, TEXT("Show Save Menu"));
+	//	//SetDlgItemText(hDlg, IDC_LABEL_SELECT, TEXT("Show In-Game Menu"));
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_UNUSED);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_UNUSED);
+	//}
+	//else {
+	//	SetDlgItemText(hDlg, IDC_LABEL_UP, INPUTCONFIG_LABEL_UP);
+	//	//EnableWindow(GetDlgItem(hDlg, IDC_LABEL_UP), TRUE);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWN, INPUTCONFIG_LABEL_DOWN);
+	//	SetDlgItemText(hDlg, IDC_LABEL_LEFT, INPUTCONFIG_LABEL_LEFT);
+	//	SetDlgItemText(hDlg, IDC_LABEL_RIGHT, INPUTCONFIG_LABEL_RIGHT);
+	//	SetDlgItemText(hDlg, IDC_LABEL_A, INPUTCONFIG_LABEL_A);
+	//	SetDlgItemText(hDlg, IDC_LABEL_B, INPUTCONFIG_LABEL_B);
+	//	SetDlgItemText(hDlg, IDC_LABEL_X, INPUTCONFIG_LABEL_X);
+	//	SetDlgItemText(hDlg, IDC_LABEL_Y, INPUTCONFIG_LABEL_Y);
+	//	SetDlgItemText(hDlg, IDC_LABEL_L, INPUTCONFIG_LABEL_L);
+	//	SetDlgItemText(hDlg, IDC_LABEL_R, INPUTCONFIG_LABEL_R);
+	//	SetDlgItemText(hDlg, IDC_LABEL_START, INPUTCONFIG_LABEL_START);
+	//	SetDlgItemText(hDlg, IDC_LABEL_SELECT, INPUTCONFIG_LABEL_SELECT);
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPRIGHT, INPUTCONFIG_LABEL_UPRIGHT);
+	//	SetDlgItemText(hDlg, IDC_LABEL_UPLEFT, INPUTCONFIG_LABEL_UPLEFT);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNRIGHT, INPUTCONFIG_LABEL_DOWNRIGHT);
+	//	SetDlgItemText(hDlg, IDC_LABEL_DOWNLEFT, INPUTCONFIG_LABEL_DOWNLEFT);
+	//}
 
 	//SetDlgItemText(hDlg, IDC_LABEL_UP, INPUTCONFIG_LABEL_UP);
 	//SetDlgItemText(hDlg, IDC_LABEL_DOWN, INPUTCONFIG_LABEL_DOWN);
@@ -8348,27 +8351,29 @@ switch(msg)
 		for( C = 0; C != 16; C ++)
 	        JoystickF[C].Attached = joyGetDevCaps( JOYSTICKID1+C, &JoystickF[C].Caps, sizeof( JOYCAPS)) == JOYERR_NOERROR;
 
-		for(i=1;i<6;i++)
-		{
-			if (i == 1) {
-				_stprintf(temp, TEXT("Game Controls - Page 1"));
-			}
-			else if (i == 2) {
-				_stprintf(temp, TEXT("Game Controls - Page 2"));
-			}
-			else if (i == 3) {
-				_stprintf(temp, TEXT("-- Not Used --"));
-			}
-			else if (i == 4) {
-				_stprintf(temp, TEXT("Menu Controls"));
-			}
-			else {
-				//_stprintf(temp, INPUTCONFIG_JPCOMBO, i);
-				break;
-			}
+		InputLabels_SetInputMenuLabels(hDlg);
 
-			SendDlgItemMessage(hDlg,IDC_JPCOMBO,CB_ADDSTRING,0,(LPARAM)(LPCTSTR)temp);
-		}
+		//for(i=1;i<6;i++)
+		//{
+		//	if (i == 1) {
+		//		_stprintf(temp, INPUTCONFIG_MENU_LABEL_1);
+		//	}
+		//	else if (i == 2) {
+		//		_stprintf(temp, INPUTCONFIG_MENU_LABEL_2);
+		//	}
+		//	else if (i == 3) {
+		//		_stprintf(temp, INPUTCONFIG_MENU_LABEL_3);
+		//	}
+		//	else if (i == 4) {
+		//		_stprintf(temp, INPUTCONFIG_MENU_LABEL_4);
+		//	}
+		//	else {
+		//		//_stprintf(temp, INPUTCONFIG_JPCOMBO, i);
+		//		break;
+		//	}
+
+		//	SendDlgItemMessage(hDlg,IDC_JPCOMBO,CB_ADDSTRING,0,(LPARAM)(LPCTSTR)temp);
+		//}
 
 		//for(i=6;i<11;i++)
 		//{

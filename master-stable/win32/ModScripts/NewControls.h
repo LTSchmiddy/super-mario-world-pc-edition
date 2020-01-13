@@ -13,6 +13,8 @@
 #include "../conffile.h"
 #include "../statemanager.h"
 #include "InputCustom.h"
+#include "ModScripts\SMW_GameMemory.h"
+#include "ModScripts\PurchaseItems.h"
 
 #include <iostream>
 //#include <bitset>
@@ -25,22 +27,24 @@
 #include <ctype.h>
 
 
+
 //New Controls:
 
-extern const uint32 Menu_Up;
-extern const uint32 Menu_Down;
-extern const uint32 Menu_Left;
-extern const uint32 Menu_Right;
-extern const uint32 Menu_A;
-extern const uint32 Menu_B;
+//extern const uint32 Menu_Up;
+//extern const uint32 Menu_Down;
+//extern const uint32 Menu_Left;
+//extern const uint32 Menu_Right;
+//extern const uint32 Menu_A;
+//extern const uint32 Menu_B;
+//
+//extern const uint32 Control_Up;
+//extern const uint32 Control_Down;
+//extern const uint32 Control_Left;
+//extern const uint32 Control_Right;
+//extern const uint32 Control_A;
+//extern const uint32 Control_B;
 
-extern const uint32 Control_Up;
-extern const uint32 Control_Down;
-extern const uint32 Control_Left;
-extern const uint32 Control_Right;
-extern const uint32 Control_A;
-extern const uint32 Control_B;
-
+extern unsigned itemPurchaseState;
 
 bool NewControlsInputUpdate(uint32, bool);
 

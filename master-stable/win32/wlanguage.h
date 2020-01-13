@@ -194,7 +194,7 @@
 
 /* This is where all the GUI text strings will eventually end up */
 
-#define WINDOW_TITLE TEXT("Legend of Zelda: A Link to the Past - PC Edition")
+#define WINDOW_TITLE TEXT("Super Mario World - PC Edition")
 //#define WINDOW_TITLE TEXT("Snes9X v%s for Windows")
 
 // the windows registry is no longer used
@@ -219,7 +219,7 @@ up-to-the-minute information and help on Snes9X.\r\n\r\n\
 Nintendo is a trade mark.")
 
 
-#define APP_NAME TEXT("Legend of Zelda: A Link to the Past - PC Edition (Snex9X)")
+#define APP_NAME TEXT("Super Mario World - PC Edition (Snex9X)")
 // possible global strings
 #define SNES9X_INFO TEXT("Snes9x: Information")
 #define SNES9X_WARN TEXT("Snes9x: WARNING!")

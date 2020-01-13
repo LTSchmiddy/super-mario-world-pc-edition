@@ -1,0 +1,54 @@
+cheat
+  name: Continue Menu
+  code: 7e1b87=05
+
+cheat
+  name: Reserve Mushroom
+  code: 7e0dc2=01
+
+cheat
+  name: Reserve Fire Flower
+  code: 7e0dc2=02
+
+cheat
+  name: Reserve Star
+  code: 7e0dc2=03
+
+cheat
+  name: Reserve Feather
+  code: 7e0dc2=04
+  enable
+
+cheat
+  name: Reserve None
+  code: 7e0dc2=00
+
+cheat
+  name: Keep Power-Ups on Hit
+  code: 00f600=a9
+
+cheat
+  name: Time Freeze v1
+  code: 7e0433=04
+
+cheat
+  name: Time Freeze v2
+  code: 008e28=88
+
+cheat
+  name: Insta-Damage
+  code: 00f61f=a9
+
+cheat
+  name: One Hit Kill
+  code: 00f604=a9
+
+cheat
+  name: Player Force Direction Right
+  code: 7e0076=01
+
+cheat
+  name: Player Force Direction Left
+  code: 7e0076=00
+  enable
+

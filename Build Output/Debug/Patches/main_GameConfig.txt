@@ -1,0 +1,11 @@
+SelectOpensSaveMenu
+true
+
+ReAccessCastles
+true
+
+UseScoreToBuyItems
+true
+
+HealthMode
+false
